@@ -10,7 +10,7 @@ function ChangeAttitude(e) {
   console.log(e);
   const task = userTodoInput.value;
   if (task === "") {
-    errorSpan.textContent = "Error: Task is Empty";
+    spanError.textContent = "Error: Task is Empty";
     spanError.classList.add("active");
     return;
     // console.log()
