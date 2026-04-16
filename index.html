@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO-LIST</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="content">
+      <header>
+        <h1>My Task</h1>
+        <button class="theme-toggle" id="theme-toggle">🌙</button>
+      </header>
+
+      <form class="input-section">
+        <input type="text" placeholder="Add a new Task..." class="todo-input" />
+        <span class="error"></span>
+        <button type="submit" class="add-btn">Add</button>
+      </form>
+      
+      <div class="filters">
+<button class="filter-btn active" data-filter="all">All</buttons>
+<button  class="filter-btn" data-filter="active">Active</buttons>
+<button class="filter-btn" data-filter="completed">Completed</buttons>
+      </div>
+      <ul class="todo-list"></ul>
+      <footer class="stats">
+        <span><strong id="activeCount">0</strong>active</span>
+        <span><strong id="completedCount">0</strong>completed</span>
+      </footer>
+    </div>
+  </body>
+</html>
