@@ -3,7 +3,20 @@ const userTodoInput = document.querySelector(".todo-input");
 const todoFor = document.querySelector(".input-section");
 const todoList = document.querySelector(".todo-list");
 const spanError = document.querySelector(".error");
-console.log(userTodoInput, todoFor, todoList,  spanError);
+const filterBtnAll = document.querySelectorAll(".filter-btn");
+const filterContBtn = document.querySelector(".filters");
+const activeCount = document.getElementById("activeCount");
+const completedCont = document.getElementById("completedCount");
+console.log(
+  userTodoInput,
+  todoFor,
+  todoList,
+  spanError,
+  filterBtnAll,
+  filterContBtn,
+  activeCount,
+  completedCont,
+);
 
 function ChangeAttitude(e) {
   e.preventDefault();
@@ -113,7 +126,89 @@ function ChangeAttitude(e) {
 
     saveBtn.addEventListener("click", handleSave);
   }
+  function handleFinish() {
+    liTodo.classList.toggle("completed");
+    updateCounts();
+  }
+  inputComplete.addEventListener("change", handleFinish);
   editBtn.addEventListener("click", handleEdit);
+  updateCounts();
 }
 
 todoFor.addEventListener("submit", ChangeAttitude);
+//closure: a closure is when a function retains information about it parent function even if the function has already returned
+
+//
+
+//for the filters
+//filters part
+for (let i = 0; i < filterBtnAll.length; i++) {
+  const allBtnFilter = filterBtnAll[i];
+  //we create  a function to update the syste so it can know which filter button was clicked
+  function filterUpdateBtn() {
+    //this picked all our  dataset fro our htl
+    const typeFilter = allBtnFilter.dataset.filter;
+    if (typeFilter === "all") {
+      allBtnFilter.classList.add("active");
+      filterBtnAll[1].classList.remove("active");
+      filterBtnAll[2].classList.remove("active");
+    } else if (typeFilter === "active") {
+      allBtnFilter.classList.add("active");
+      filterBtnAll[0].classList.remove("active");
+      filterBtnAll[2].classList.remove("active");
+    } else if (typeFilter === "completed") {
+      allBtnFilter.classList.add("active");
+      filterBtnAll[0].classList.remove("active");
+      filterBtnAll[1].classList.remove("active");
+    }
+    handleFilters(typeFilter);
+  }
+  allBtnFilter.addEventListener("click", filterUpdateBtn);
+}
+function handleFilters(typeFilter) {
+  console.log({ typeFilter });
+  const listAll = document.querySelectorAll(".todo-item");
+  console.log(listAll);
+
+  for (let i = 0; i < listAll.length; i++) {
+    const todoT = listAll[i];
+    const isCompleted = todoT.classList.contains("completed");
+    console.log(isCompleted);
+
+    todoT.style.display = "";
+    if (typeFilter === "active") {
+      if (!isCompleted) {
+        todoT.style.display = "";
+      } else {
+        todoT.style.display = "none";
+      }
+    }
+
+    if (typeFilter === "completed") {
+      if (isCompleted) {
+        todoT.style.display = "";
+      } else {
+        todoT.style.display = "none";
+      }
+    }
+  }
+}
+function updateCounts() {
+  const activeTodo = todoList.querySelectorAll(".todo-item");
+  console.log({ activeTodo });
+  const todoCoplete = todoList.querySelectorAll(".completed");
+  const totalTodos = activeTodo.length;
+  const copleteTodos = todoCoplete.length;
+  const activeTodos = totalTodos - copleteTodos;
+  console.log({ totalTodos, copleteTodos, activeTodos });
+  activeCount.textContent = activeTodos;
+  completedCont.textContent = copleteTodos;
+
+  /*const completeTodo = todoList.querySelectorAll(".completed");
+  const todoTotal = activeTodo.length;
+  const completeTodos = completeTodo.length;
+  const todoActive = todoTotal - completeTodos;
+  console.log({ todoTotal, completeTodos, activeTodo });
+  activeCount.textContent = activeTodo;
+  completedCont.textContent = completeTodo;*/
+}
